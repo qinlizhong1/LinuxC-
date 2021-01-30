@@ -8,6 +8,9 @@
 #include <string.h>
 #include <errno.h>
 #include <stdlib.h>
+#include <sys/stat.h>
+#include <sys/types.h>
+#include <fcntl.h>
 
 int g_var = 100;
 
@@ -57,10 +60,39 @@ void test1()
     }
 }
 
+//验证父子进程共享文件表项目
+void test2()
+{
+    int fd = open("test.txt", O_WRONLY | O_CREAT, 0664);
+    if (fd == -1) {
+        perror("open");
+        exit(-1);
+    }
+
+    pid_t pid = fork();
+    if (pid > 0) {
+        sleep(3);
+        printf("I'm father; I'm writing test.txt...\n");
+        write(fd, "hello", 5);
+        close(fd);
+    }
+    else if (pid == 0) {
+        printf("I'm child; I'm writing test.txt...\n");
+        write(fd, "world", 5);
+        sleep(5);
+        write(fd, "lalala", 6);
+        close(fd);
+    }
+    else {
+        perror("fork");
+        exit(-1);
+    }
+}
+
 int main(int argc, char **argv)
 {
     //test0();
-    test1();
-
+    //test1();
+    test2();
     return 0;
 }
