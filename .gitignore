@@ -1,1 +1,8 @@
+*
 *dSYM/
+!*.cpp
+!*.c
+!*.h
+!*makefile
+!README.md
+
