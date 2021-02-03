@@ -141,8 +141,6 @@ void test0()
 int main(int argc, char **argv)
 {
     lockType = atoi(argv[1]);
-    test0();
-    //test1();
 
     return 0;
 }
