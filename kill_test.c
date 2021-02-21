@@ -1,7 +1,7 @@
 //
 // Created by lizhong on 2021/1/30.
 //
-//gcc -m32 -g -o pthread_create_test pthread_create_test.c -lpthread
+//gcc -g -o kill_test kill_test.c
 
 /*
  *int kill(pid_t pid, int sig)
