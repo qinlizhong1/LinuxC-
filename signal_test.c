@@ -11,9 +11,9 @@
  *信号有三种处理方式:
        (1)忽略，但是需要注意的是有两种信号不可以：SIGKILL和SIGSTOP
        (2)执行信号的默认动作
-       (3)捕获
+       (3)捕获,SIGKILL和SIGSTOP这2个信号也不能捕获
  *
- *
+ *信号会打断某些（不支持自动重启的函数，后面会讲）正在阻塞的函数,如sleep函数
  *
  *
  */
@@ -47,7 +47,7 @@ void sighandler(int sig)
         default:
             printf("hello, who are you %d?\n", sig);
     }
-    sleep(2); // 删除这一行，再给程序发信号，看看 main 函数打点的情况。
+    sleep(2); // 删除这一行，再给程序发信号，看看 main 函数打点的情况：删掉sleep之后，程序捕捉信号后就会立刻打点
 }
 
 void test0()
@@ -154,8 +154,8 @@ void test1()
 
 int main(int argc, char **argv)
 {
-    //test0();
-    test1();
+    test0();
+    //test1();
     //test2();
     return 0;
 }
